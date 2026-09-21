@@ -60,6 +60,43 @@ a{text-decoration:none;color:inherit}
 @media(max-width:1100px){.nav{gap:13px;font-size:12px}.actions{display:none}.cards{grid-template-columns:repeat(3,1fr)}.qualities{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:760px){.top{font-size:11px;flex-direction:column}.header{flex-wrap:wrap}.logo{max-width:270px;width:70%}.nav{order:3;width:100%;overflow:auto;justify-content:flex-start;gap:20px}.hero{grid-template-columns:1fr}.hero-left{padding:35px 7%}.hero-visual{height:250px}.qualities{grid-template-columns:repeat(2,1fr);margin:0 4% 20px}.quality:nth-child(2n){border:0}.content-grid{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}.info-grid{grid-template-columns:1fr}.footer-cta{font-size:12px}}
 @media(max-width:480px){.cards{grid-template-columns:1fr}.hero h1{font-size:2.4rem}.hero h2{letter-spacing:3px}}
+
+/* STS STUDY MATERIAL NAVIGATION */
+.study-nav{margin-top:25px}
+.study-level{display:none}
+.study-level.active{display:block}
+.study-back{margin:0 0 18px}
+.study-back button,.study-btn{
+  border:0;cursor:pointer;border-radius:8px;padding:12px 16px;
+  font-weight:800;background:var(--navy);color:#fff
+}
+.study-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:15px
+}
+.study-tile{
+  background:#fff;border-radius:12px;padding:20px;text-align:center;
+  box-shadow:0 2px 10px #0002;border:1px solid #e7ebf0
+}
+.study-tile h3{margin-bottom:8px;color:var(--navy)}
+.study-tile p{margin-bottom:14px;color:#526173}
+.study-btn.gold{background:var(--gold);color:#111}
+.study-title{
+  text-align:center;color:var(--navy);margin:10px 0 20px;font-size:1.5rem
+}
+.chapter-list{display:grid;gap:12px}
+.chapter-item{
+  background:#fff;border-radius:10px;padding:16px 18px;
+  box-shadow:0 2px 8px #0001;display:flex;justify-content:space-between;
+  align-items:center;gap:15px;flex-wrap:wrap
+}
+.chapter-item h4{color:var(--navy);margin-bottom:3px}
+.chapter-item small{display:block;color:#68778a;margin-top:4px}
+.chapter-item .study-btn{padding:9px 13px}
+.study-coming{background:#eef2f6!important;color:#526173!important;cursor:default!important}
+@media(max-width:600px){.chapter-item{align-items:flex-start}}
+
 </style>
 </head>
 <body>
@@ -169,18 +206,181 @@ a{text-decoration:none;color:inherit}
 
 <section class="section" id="study-materials">
 <h2>STUDY MATERIALS</h2>
-<p style="text-align:center;margin-bottom:28px">Choose your class to find notes, question papers, worksheets and PDF study materials.</p>
-<div class="info-grid">
-<div class="info"><h3>📘 CLASS V</h3><p>Study materials for Class V.</p><a class="btn gold" href="study-materials/class-5/">OPEN CLASS V</a></div>
-<div class="info"><h3>📗 CLASS VI</h3><p>Study materials for Class VI.</p><a class="btn gold" href="pdfs/class6/ষষ্ঠ শ্রেণীর ইতিহাস ষষ্ঠ অধ্যায়.pdf">OPEN CLASS VI</a></div>
-<div class="info"><h3>📙 CLASS VII</h3><p>Study materials for Class VII.</p><a class="btn gold" href="study-materials/class-7/">OPEN CLASS VII</a></div>
-<div class="info"><h3>📕 CLASS VIII</h3><p>Study materials for Class VIII.</p><a class="btn gold" href="study-materials/class-8/">OPEN CLASS VIII</a></div>
-<div class="info"><h3>📚 CLASS IX</h3><p>Separate section for Class IX notes, tests and PDFs.</p><a class="btn gold" href="study-materials/class-9/">OPEN CLASS IX</a></div>
-<div class="info"><h3>📚 CLASS X</h3><p>Separate section for Class X notes, tests and PDFs.</p><a class="btn gold" href="study-materials/class-10/">OPEN CLASS X</a></div>
-<div class="info"><h3>🎓 CLASS XI</h3><p>Study materials for Class XI.</p><a class="btn gold" href="study-materials/class-11/">OPEN CLASS XI</a></div>
-<div class="info"><h3>🎓 CLASS XII</h3><p>Study materials for Class XII.</p><a class="btn gold" href="study-materials/class-12/">OPEN CLASS XII</a></div>
+<p style="text-align:center;margin-bottom:28px">
+Choose <b>CLASS → SUBJECT → CHAPTER → STUDY MATERIAL</b>
+</p>
+
+<div class="study-nav">
+  <div id="study-classes" class="study-level active">
+    <div class="study-grid" id="classGrid"></div>
+  </div>
+
+  <div id="study-subjects" class="study-level">
+    <div class="study-back">
+      <button onclick="showStudyLevel('study-classes')">← BACK TO CLASSES</button>
+    </div>
+    <h3 id="selectedClassTitle" class="study-title"></h3>
+    <div class="study-grid" id="subjectGrid"></div>
+  </div>
+
+  <div id="study-chapters" class="study-level">
+    <div class="study-back">
+      <button onclick="showStudyLevel('study-subjects')">← BACK TO SUBJECTS</button>
+    </div>
+    <h3 id="selectedSubjectTitle" class="study-title"></h3>
+    <div class="chapter-list" id="chapterList"></div>
+  </div>
 </div>
 </section>
+
+
+<script>
+/* STS: CLASS → SUBJECT → CHAPTER → STUDY MATERIAL */
+const STS_STUDY_DATA = {
+  "Class V": {
+    "Bengali": [], "English": [], "Mathematics": [], "Science": []
+  },
+  "Class VI": {
+    "Bengali": [], "English": [], "Mathematics": [],
+    "History": [
+      {
+        name: "Chapter 6 — ষষ্ঠ শ্রেণীর ইতিহাস ষষ্ঠ অধ্যায়",
+        pdf: "pdfs/class6/ষষ্ঠ শ্রেণীর ইতিহাস ষষ্ঠ অধ্যায়.pdf"
+      }
+    ],
+    "Geography": [], "Science": []
+  },
+  "Class VII": {
+    "Bengali": [], "English": [], "Mathematics": [],
+    "History": [], "Geography": [], "Science": []
+  },
+  "Class VIII": {
+    "Bengali": [], "English": [], "Mathematics": [],
+    "History": [], "Geography": [], "Science": []
+  },
+  "Class IX": {
+    "Bengali": [], "English": [], "Mathematics": [],
+    "Physical Science": [], "Life Science": [],
+    "History": [], "Geography": []
+  },
+  "Class X": {
+    "Bengali": [], "English": [], "Mathematics": [],
+    "Physical Science": [], "Life Science": [],
+    "History": [], "Geography": []
+  },
+  "Class XI": {
+    "Bengali": [], "English": [], "History": [],
+    "Geography": [], "Political Science": []
+  },
+  "Class XII": {
+    "Bengali": [], "English": [], "History": [],
+    "Geography": [], "Political Science": []
+  }
+};
+
+let currentClass = "";
+let currentSubject = "";
+
+function showStudyLevel(id){
+  document.querySelectorAll(".study-level").forEach(el => el.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function buildClassGrid(){
+  const grid = document.getElementById("classGrid");
+  grid.innerHTML = "";
+
+  Object.keys(STS_STUDY_DATA).forEach(className => {
+    const div = document.createElement("div");
+    div.className = "study-tile";
+    div.innerHTML = `
+      <h3>📚 ${className.toUpperCase()}</h3>
+      <p>Notes, chapters, tests & PDF study materials.</p>
+      <button class="study-btn gold" onclick="openClass('${className}')">
+        OPEN ${className.toUpperCase()}
+      </button>
+    `;
+    grid.appendChild(div);
+  });
+}
+
+function openClass(className){
+  currentClass = className;
+  document.getElementById("selectedClassTitle").textContent =
+    className + " — SUBJECTS";
+
+  const grid = document.getElementById("subjectGrid");
+  grid.innerHTML = "";
+
+  Object.keys(STS_STUDY_DATA[className]).forEach(subject => {
+    const div = document.createElement("div");
+    div.className = "study-tile";
+    div.innerHTML = `
+      <h3>📘 ${subject}</h3>
+      <p>Open chapters and study materials.</p>
+      <button class="study-btn gold" onclick="openSubject('${subject}')">
+        OPEN SUBJECT
+      </button>
+    `;
+    grid.appendChild(div);
+  });
+
+  showStudyLevel("study-subjects");
+}
+
+function openSubject(subject){
+  currentSubject = subject;
+  document.getElementById("selectedSubjectTitle").textContent =
+    currentClass + " → " + subject + " — CHAPTERS";
+
+  const list = document.getElementById("chapterList");
+  list.innerHTML = "";
+
+  const chapters = STS_STUDY_DATA[currentClass][subject];
+
+  if(chapters.length === 0){
+    list.innerHTML = `
+      <div class="chapter-item">
+        <div>
+          <h4>📖 Study Materials Coming Soon</h4>
+          <small>Chapter-wise materials will be added here.</small>
+        </div>
+      </div>
+    `;
+  } else {
+    chapters.forEach(chapter => {
+      const item = document.createElement("div");
+      item.className = "chapter-item";
+
+      if(chapter.pdf){
+        item.innerHTML = `
+          <div>
+            <h4>📖 ${chapter.name}</h4>
+            <small>Study Material / PDF</small>
+          </div>
+          <a class="study-btn gold" href="${chapter.pdf}" target="_blank">
+            OPEN PDF
+          </a>
+        `;
+      } else {
+        item.innerHTML = `
+          <div>
+            <h4>📖 ${chapter.name}</h4>
+            <small>Study Material</small>
+          </div>
+          <button class="study-btn study-coming">COMING SOON</button>
+        `;
+      }
+
+      list.appendChild(item);
+    });
+  }
+
+  showStudyLevel("study-chapters");
+}
+
+buildClassGrid();
+</script>
 
 </body>
 </html>
