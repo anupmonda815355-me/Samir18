@@ -97,6 +97,16 @@ a{text-decoration:none;color:inherit}
 .study-coming{background:#eef2f6!important;color:#526173!important;cursor:default!important}
 @media(max-width:600px){.chapter-item{align-items:flex-start}}
 
+
+/* STS chapter resources */
+.resource-buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.resource-btn{display:inline-block;padding:9px 12px;border-radius:7px;font-weight:800;font-size:13px;background:var(--navy);color:#fff}
+.resource-btn.gold{background:var(--gold);color:#111}
+.resource-btn.light{background:#eef2f6;color:#526173}
+.subchapter-group{margin-top:10px;padding:12px;border-left:4px solid var(--gold);background:#f8fafc;border-radius:8px}
+.subchapter-group h5{font-size:15px;color:var(--navy);margin-bottom:5px}
+.chapter-item.nested{display:block}
+
 </style>
 </head>
 <body>
@@ -207,7 +217,7 @@ a{text-decoration:none;color:inherit}
 <section class="section" id="study-materials">
 <h2>STUDY MATERIALS</h2>
 <p style="text-align:center;margin-bottom:28px">
-Choose <b>CLASS → SUBJECT → CHAPTER → STUDY MATERIAL</b>
+Choose <b>CLASS → SUBJECT → CHAPTER → STUDY MATERIAL / OTHERS</b>
 </p>
 
 <div class="study-nav">
@@ -243,10 +253,7 @@ const STS_STUDY_DATA = {
   "Class VI": {
     "Bengali": [], "English": [], "Mathematics": [],
     "History": [
-      {
-        name: "Chapter 6 — ষষ্ঠ শ্রেণীর ইতিহাস ষষ্ঠ অধ্যায়",
-        pdf: "pdfs/class6/ষষ্ঠ শ্রেণীর ইতিহাস ষষ্ঠ অধ্যায়.pdf"
-      }
+      { name: "Chapter 6 — ষষ্ঠ শ্রেণীর ইতিহাস ষষ্ঠ অধ্যায়", study: [{name:"Study Material", pdf:"pdfs/class6/ষষ্ঠ শ্রেণীর ইতিহাস ষষ্ঠ অধ্যায়.pdf"}], others: [] }
     ],
     "Geography": [], "Science": []
   },
@@ -265,191 +272,29 @@ const STS_STUDY_DATA = {
   },
   "Class X": {
     "Bengali": [], "English": [], "Mathematics": [],
-    "Physical Science": [<!-- CLASS X - PHYSICAL SCIENCE -->
-<section class="subject-section">
-
-    <h2>Class X - Physical Science</h2>
-
-    <div class="chapter-container">
-
-        <!-- Chapter 1 -->
-        <div class="chapter">
-            <button onclick="toggleChapter('chapter1')">
-                1. পরিবেশের জন্য ভাবনা
-            </button>
-
-            <div id="chapter1" class="chapter-content">
-                <a href="#" target="_blank">📚 Study Material</a>
-                <a href="#" target="_blank">📝 Others</a>
-            </div>
-        </div>
-
-        <!-- Chapter 2 -->
-        <div class="chapter">
-            <button onclick="toggleChapter('chapter2')">
-                2. গ্যাসের আচরণ
-            </button>
-
-            <div id="chapter2" class="chapter-content">
-                <a href="#" target="_blank">📚 Study Material</a>
-                <a href="#" target="_blank">📝 Others</a>
-            </div>
-        </div>
-
-        <!-- Chapter 3 -->
-        <div class="chapter">
-            <button onclick="toggleChapter('chapter3')">
-                3. রাসায়নিক গণনা
-            </button>
-
-            <div id="chapter3" class="chapter-content">
-                <a href="#" target="_blank">📚 Study Material</a>
-                <a href="#" target="_blank">📝 Others</a>
-            </div>
-        </div>
-
-        <!-- Chapter 4 -->
-        <div class="chapter">
-            <button onclick="toggleChapter('chapter4')">
-                4. তাপের ঘটনাসমূহ
-            </button>
-
-            <div id="chapter4" class="chapter-content">
-                <a href="#" target="_blank">📚 Study Material</a>
-                <a href="#" target="_blank">📝 Others</a>
-            </div>
-        </div>
-
-        <!-- Chapter 5 -->
-        <div class="chapter">
-            <button onclick="toggleChapter('chapter5')">
-                5. আলো
-            </button>
-
-            <div id="chapter5" class="chapter-content">
-                <a href="#" target="_blank">📚 Study Material</a>
-                <a href="#" target="_blank">📝 Others</a>
-            </div>
-        </div>
-
-        <!-- Chapter 6 -->
-        <div class="chapter">
-            <button onclick="toggleChapter('chapter6')">
-                6. চলতড়িৎ
-            </button>
-
-            <div id="chapter6" class="chapter-content">
-                <a href="#" target="_blank">📚 Study Material</a>
-                <a href="#" target="_blank">📝 Others</a>
-            </div>
-        </div>
-
-        <!-- Chapter 7 -->
-        <div class="chapter">
-            <button onclick="toggleChapter('chapter7')">
-                7. পরমাণুর নিউক্লিয়াস
-            </button>
-
-            <div id="chapter7" class="chapter-content">
-                <a href="#" target="_blank">📚 Study Material</a>
-                <a href="#" target="_blank">📝 Others</a>
-            </div>
-        </div>
-
-        <!-- Chapter 8 -->
-        <div class="chapter">
-            <button onclick="toggleChapter('chapter8')">
-                8. পদার্থের ভৌত ও রাসায়নিক ধর্ম
-            </button>
-
-            <div id="chapter8" class="chapter-content">
-
-                <div class="subchapter">
-                    <button onclick="toggleChapter('chapter8_1')">
-                        8.1 পর্যায়সারণি এবং মৌলদের ধর্মের পর্যাবৃত্ততা
-                    </button>
-
-                    <div id="chapter8_1" class="chapter-content">
-                        <a href="#" target="_blank">📚 Study Material</a>
-                        <a href="#" target="_blank">📝 Others</a>
-                    </div>
-                </div>
-
-                <div class="subchapter">
-                    <button onclick="toggleChapter('chapter8_2')">
-                        8.2 আয়নীয় ও সমযোজী বন্ধন
-                    </button>
-
-                    <div id="chapter8_2" class="chapter-content">
-                        <a href="#" target="_blank">📚 Study Material</a>
-                        <a href="#" target="_blank">📝 Others</a>
-                    </div>
-                </div>
-
-                <div class="subchapter">
-                    <button onclick="toggleChapter('chapter8_3')">
-                        8.3 তড়িৎপ্রবাহ ও রাসায়নিক বিক্রিয়া
-                    </button>
-
-                    <div id="chapter8_3" class="chapter-content">
-                        <a href="#" target="_blank">📚 Study Material</a>
-                        <a href="#" target="_blank">📝 Others</a>
-                    </div>
-                </div>
-
-                <div class="subchapter">
-                    <button onclick="toggleChapter('chapter8_4')">
-                        8.4 পরীক্ষাগার ও রাসায়নিক শিল্পে অজৈব রসায়ন
-                    </button>
-
-                    <div id="chapter8_4" class="chapter-content">
-                        <a href="#" target="_blank">📚 Study Material</a>
-                        <a href="#" target="_blank">📝 Others</a>
-                    </div>
-                </div>
-
-                <div class="subchapter">
-                    <button onclick="toggleChapter('chapter8_5')">
-                        8.5 ধাতুবিদ্যা
-                    </button>
-
-                    <div id="chapter8_5" class="chapter-content">
-                        <a href="#" target="_blank">📚 Study Material</a>
-                        <a href="#" target="_blank">📝 Others</a>
-                    </div>
-                </div>
-
-                <div class="subchapter">
-                    <button onclick="toggleChapter('chapter8_6')">
-                        8.6 জৈব রসায়ন
-                    </button>
-
-                    <div id="chapter8_6" class="chapter-content">
-                        <a href="#" target="_blank">📚 Study Material</a>
-                        <a href="#" target="_blank">📝 Others</a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-</section>
-
-
-<!-- JAVASCRIPT -->
-<script>
-function toggleChapter(id) {
-    const element = document.getElementById(id);
-
-    if (element.style.display === "block") {
-        element.style.display = "none";
-    } else {
-        element.style.display = "block";
-    }
-}
-</script>], "Life Science": [],
-    "History": [], "Geography": []
+    "Physical Science": [
+      { name: "1. পরিবেশের জন্য ভাবনা", study: [], others: [] },
+      { name: "2. গ্যাসের আচরণ", study: [], others: [] },
+      { name: "3. রাসায়নিক গণনা", study: [], others: [] },
+      { name: "4. তাপের ঘটনাসমূহ", study: [], others: [] },
+      { name: "5. আলো", study: [], others: [] },
+      { name: "6. চলতড়িৎ", study: [], others: [] },
+      { name: "7. পরমাণুর নিউক্লিয়াস", study: [], others: [] },
+      {
+        name: "8. পদার্থের ভৌত ও রাসায়নিক ধর্ম",
+        study: [],
+        others: [],
+        subchapters: [
+          { name: "8.1 পর্যায়সারণি এবং মৌলদের ধর্মের পর্যাবৃত্ততা", study: [], others: [] },
+          { name: "8.2 আয়নীয় ও সমযোজী বন্ধন", study: [], others: [] },
+          { name: "8.3 তড়িৎপ্রবাহ ও রাসায়নিক বিক্রিয়া", study: [], others: [] },
+          { name: "8.4 পরীক্ষাগার ও রাসায়নিক শিল্পে অজৈব রসায়ন", study: [], others: [] },
+          { name: "8.5 ধাতুবিদ্যা", study: [], others: [] },
+          { name: "8.6 জৈব রসায়ন", study: [], others: [] }
+        ]
+      }
+    ],
+    "Life Science": [], "History": [], "Geography": []
   },
   "Class XI": {
     "Bengali": [], "English": [], "History": [],
@@ -511,6 +356,49 @@ function openClass(className){
   showStudyLevel("study-subjects");
 }
 
+function resourceButtons(items, type){
+  if(!items || items.length === 0){
+    return `<span class="resource-btn light">${type === "study" ? "STUDY MATERIAL COMING SOON" : "OTHERS COMING SOON"}</span>`;
+  }
+  return items.map(item => {
+    if(item.pdf){
+      return `<a class="resource-btn ${type === "study" ? "gold" : ""}" href="${item.pdf}" target="_blank" rel="noopener">${item.name || (type === "study" ? "STUDY MATERIAL" : "OTHERS")}</a>`;
+    }
+    return `<span class="resource-btn light">${item.name || (type === "study" ? "STUDY MATERIAL" : "OTHERS")}</span>`;
+  }).join("");
+}
+
+function renderChapterItem(chapter, nested=false){
+  const wrapper = document.createElement("div");
+  wrapper.className = nested ? "chapter-item nested" : "chapter-item";
+
+  let html = `<div><h4>📖 ${chapter.name}</h4>`;
+
+  if(chapter.subchapters && chapter.subchapters.length){
+    html += `<small>Subchapters</small>`;
+    html += `<div class="subchapter-group">`;
+    chapter.subchapters.forEach(sub => {
+      html += `<div style="padding:10px 0;border-bottom:1px solid #e7ebf0;">`;
+      html += `<h5>${sub.name}</h5>`;
+      html += `<div class="resource-buttons">`;
+      html += resourceButtons(sub.study, "study");
+      html += resourceButtons(sub.others, "others");
+      html += `</div></div>`;
+    });
+    html += `</div>`;
+  } else {
+    html += `<small>Chapter study materials and other resources</small>`;
+    html += `<div class="resource-buttons">`;
+    html += resourceButtons(chapter.study, "study");
+    html += resourceButtons(chapter.others, "others");
+    html += `</div>`;
+  }
+
+  html += `</div>`;
+  wrapper.innerHTML = html;
+  return wrapper;
+}
+
 function openSubject(subject){
   currentSubject = subject;
   document.getElementById("selectedSubjectTitle").textContent =
@@ -531,32 +419,7 @@ function openSubject(subject){
       </div>
     `;
   } else {
-    chapters.forEach(chapter => {
-      const item = document.createElement("div");
-      item.className = "chapter-item";
-
-      if(chapter.pdf){
-        item.innerHTML = `
-          <div>
-            <h4>📖 ${chapter.name}</h4>
-            <small>Study Material / PDF</small>
-          </div>
-          <a class="study-btn gold" href="${chapter.pdf}" target="_blank">
-            OPEN PDF
-          </a>
-        `;
-      } else {
-        item.innerHTML = `
-          <div>
-            <h4>📖 ${chapter.name}</h4>
-            <small>Study Material</small>
-          </div>
-          <button class="study-btn study-coming">COMING SOON</button>
-        `;
-      }
-
-      list.appendChild(item);
-    });
+    chapters.forEach(chapter => list.appendChild(renderChapterItem(chapter)));
   }
 
   showStudyLevel("study-chapters");
